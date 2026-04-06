@@ -1,0 +1,8 @@
+{
+    "require": {
+        "phpmailer/phpmailer": "^6.10",
+        "razorpay/razorpay": "^2.9",
+        "dompdf/dompdf": "^3.1",
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
