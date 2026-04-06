@@ -1,0 +1,691 @@
+:root {
+    --primary: #ff3f6c;
+    --primary-dark: #e6395a;
+    --primary-rgb: 255, 63, 108;
+    --secondary: #282c3f;
+    --light-gray: #f5f5f6;
+    --dark-gray: #696b79;
+    --white: #ffffff;
+    --black: #000000;
+    --error: #c0392b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #fafafa;
+    color: var(--secondary);
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Header Styles */
+.navbar {
+    background-color: var(--white);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 15px 0;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--secondary);
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--primary);
+}
+
+.nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-icons a {
+    color: var(--secondary);
+    font-size: 20px;
+    transition: color 0.3s;
+}
+
+.nav-icons a:hover {
+    color: var(--primary);
+}
+
+
+.mobile-menu-btn {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--secondary);
+}
+
+/* Hero, Categories, Products & Other Sections (No Changes) */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2070&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--white);
+    padding: 0 20px;
+}
+
+.hero-content h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 25px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+.btn-primary:hover {
+    background-color: #f0f0f0;
+}
+
+.section-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 40px 0 20px;
+    text-align: center;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+@media (min-width: 767px) {
+    .categories-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.category-card {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 150px;
+}
+
+@media (min-width: 768px) {
+    .category-card {
+        height: 180px;
+    }
+}
+
+.category-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.category-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.category-card:hover .category-overlay {
+    opacity: 1;
+}
+
+.category-overlay span {
+    color: var(--white);
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.products-section {
+    background-color: var(--light-gray);
+    padding: 40px 0;
+}
+
+.products-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+    .products-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.products-header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+@media (min-width: 768px) {
+    .products-header-right {
+        margin-top: 0;
+    }
+}
+
+.btn-view-all {
+    padding: 8px 16px;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    background-color: var(--white);
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.btn-view-all:hover {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+@media (min-width: 768px) {
+    .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    .products-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.product-card {
+    background-color: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #eee;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.product-image {
+    position: relative;
+    height: 200px;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.discount-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: var(--primary);
+    color: var(--white);
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 2px;
+    font-weight: bold;
+}
+
+.wishlist-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.wishlist-icon:hover {
+    color: var(--primary);
+}
+
+.product-info {
+    padding: 15px;
+}
+
+.product-title {
+    font-weight: 500;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-brand {
+    font-size: 12px;
+    color: var(--dark-gray);
+    margin-bottom: 10px;
+}
+
+.product-price {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.current-price {
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.price-original {
+    font-size: 12px;
+    color: var(--dark-gray);
+    text-decoration: line-through;
+    margin-left: 8px;
+}
+
+.product-rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.rating-stars {
+    color: #ffc107;
+    font-size: 12px;
+}
+
+.rating-count {
+    font-size: 12px;
+    color: var(--dark-gray);
+    margin-left: 5px;
+}
+
+.add-to-bag {
+    width: 100%;
+    padding: 8px 0;
+    background-color: var(--light-gray);
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-to-bag:hover {
+    background-color: #e0e0e0;
+}
+
+/* Footer */
+footer {
+    background-color: var(--white);
+    padding: 30px 0;
+    margin-top: auto;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (min-width: 768px) {
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.copyright {
+    color: var(--dark-gray);
+    margin-bottom: 15px;
+}
+
+@media (min-width: 768px) {
+    .copyright {
+        margin-bottom: 0;
+    }
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: var(--dark-gray);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--primary);
+}
+
+/* Mobile Menu and Responsive Styles (No changes) */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100%;
+    background-color: var(--white);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, .1);
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform .3s;
+    overflow-y: auto;
+    padding: 20px
+}
+
+.mobile-menu.active {
+    transform: translateX(0)
+}
+
+.mobile-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px
+}
+
+.mobile-menu-logo {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary)
+}
+
+.close-menu-btn {
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--secondary)
+}
+
+.mobile-search {
+    position: relative;
+    margin-bottom: 20px
+}
+
+.mobile-search input {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background-color: var(--light-gray)
+}
+
+.mobile-search i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--dark-gray)
+}
+
+.mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px
+}
+
+.mobile-nav-links a {
+    text-decoration: none;
+    color: var(--secondary);
+    font-weight: 500;
+    padding: 8px 0
+}
+
+.mobile-account-links {
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px
+}
+
+.mobile-account-links a {
+    text-decoration: none;
+    color: var(--secondary);
+    padding: 8px 0
+}
+
+.mobile-account-links a i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center
+}
+
+@media (max-width:767px) {
+    .nav-links {
+        display: none
+    }
+
+    .mobile-menu-btn {
+        display: block
+    }
+
+    .hero-content h1 {
+        font-size: 28px
+    }
+
+    .hero-content p {
+        font-size: 16px
+    }
+
+    .products-header-right {
+        justify-content: center;
+        width: 100%
+    }
+}
+
+
+/* === CSS FOR PROFILE CARD DROPDOWN === */
+.profile-card-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.profile-card {
+    position: absolute;
+    top: calc(100% + 15px);
+    right: 0;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    width: 280px;
+    z-index: 101;
+    padding: 15px;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    border: 1px solid #eee;
+}
+
+.profile-card.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.profile-card .profile-header {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+}
+
+.profile-card h4 {
+    font-size: 16px;
+    color: var(--secondary);
+    margin-bottom: 5px;
+}
+
+.profile-card p {
+    font-size: 13px;
+    color: var(--dark-gray);
+}
+
+/* MODIFIED: Login/Signup Button Styles */
+.profile-card .btn-login-signup {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    background-color: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* MODIFIED: New Hover Effect */
+.profile-card .btn-login-signup:hover {
+    color: var(--white);
+    box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.4);
+}
+
+.profile-card-links {
+    list-style: none;
+}
+
+.profile-card-links li a,
+.profile-card-links li button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 12px 5px;
+    text-decoration: none;
+    color: var(--secondary);
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s;
+    border-radius: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+}
+
+.profile-card-links li a i,
+.profile-card-links li button i {
+    margin-right: 15px;
+    width: 20px;
+    color: var(--dark-gray);
+}
+
+.profile-card-links li a:hover,
+.profile-card-links li button:hover {
+    background-color: var(--light-gray);
+    color: var(--primary);
+}
+
+.profile-card .hidden {
+    display: none;
+}
+
+/* === ADDED: CSS FOR USER GREETING TEXT === */
+/* === MODIFIED: CSS FOR USER GREETING TEXT === */
+.user-greeting-text {
+    color: var(--secondary);
+    font-size: 16px;
+    /* Increased from 14px */
+    font-weight: 500;
+    margin-left: 8px;
+    white-space: nowrap;
+    cursor: pointer;
+    /* ADDED: Makes it look clickable */
+    transition: color 0.3s;
+    /* ADDED: Smooth transition for hover effect */
+}
+
+/* ADDED: Hover effect for better UX */
+.user-greeting-text:hover {
+    color: var(--primary);
+}
+
+/* This is a utility class to hide the greeting when logged out */
+.user-greeting-text.hidden {
+    display: none;
+}
+
+/* On smaller screens, hide the greeting text to prevent layout issues */
+@media (max-width: 767px) {
+    .user-greeting-text {
+        display: none !important;
+    }
+}
+

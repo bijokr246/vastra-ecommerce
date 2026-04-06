@@ -1,0 +1,230 @@
+:root {
+    --primary: #ff3f6c;
+    --primary-dark: #e6395a;
+    --secondary: #282c3f;
+    --light-gray: #f5f5f6;
+    --dark-gray: #696b79;
+    --white: #ffffff;
+    --black: #000000;
+    --error: #c0392b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #fafafa;
+    color: var(--secondary);
+}
+
+.login-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.login-left {
+    flex: 1;
+    background-color: var(--primary);
+    background: linear-gradient(135deg, #ff3f6c 0%, #ff6b8b 100%);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    color: var(--white);
+}
+
+@media (min-width: 768px) {
+    .login-left {
+        display: flex;
+    }
+}
+
+.login-left-content {
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-left h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.login-left p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+.login-left img {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.login-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.login-form-container {
+    max-width: 400px;
+    width: 100%;
+    background-color: var(--white);
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.logo h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 1px;
+}
+
+.login-form h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--secondary);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--secondary);
+}
+
+.input-field {
+    position: relative;
+}
+
+.input-field input {
+    width: 100%;
+    padding: 12px 15px 12px 40px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border 0.3s;
+}
+
+.input-field input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--dark-gray);
+}
+
+.input-icon-hidden {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--dark-gray);
+}
+
+.forgot-password {
+    display: block;
+    text-align: right;
+    margin-top: 0.5rem;
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    /* margin-top: 1rem; */
+}
+
+.login-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+.signup-link {
+    text-align: center;
+    color: var(--dark-gray);
+    margin-top: 1.5rem;
+}
+
+.signup-link a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.section-divider {
+    margin: 2rem 0 1.5rem 0;
+    border: none;
+    border-top: 1px solid #eee;
+}
+
+.user-link {
+    text-align: center;
+    color: var(--dark-gray);
+    font-size: 0.9rem;
+}
+
+.user-link a {
+    color: var(--secondary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.user-link a:hover {
+    color: var(--primary);
+}
+
+.error-msg {
+    color: var(--primary);
+    font-size: 0.8rem;
+    display: hidden;
+    margin-top: 5px;
+    min-height: 1rem;
+    /* Prevents layout shifts */
+}
+
+.general-error {
+    background-color: #ffebee;
+    color: var(--error);
+    border: 1px solid var(--error);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+#role {
+    display: none;
+}
