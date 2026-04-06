@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard | Vastra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #6366f1;
+            --secondary: #1e293b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light: #f8fafc;
+            --dark: #0f172a;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--secondary);
+        }
+
+        /* Dashboard Layout */
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 0.5rem;
+        }
+
+        .seller-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .seller-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+
+        .seller-details h4 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .seller-details p {
+            font-size: 0.875rem;
+            color: var(--secondary);
+            opacity: 0.7;
+        }
+
+        .nav-menu {
+            margin-top: 1rem;
+        }
+
+        .menu-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748b;
+            margin: 1.5rem 0 0.75rem;
+            padding-left: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            color: var(--secondary);
+            text-decoration: none;
+            margin-bottom: 0.25rem;
+            transition: all 0.2s;
+        }
+
+        .nav-link i {
+            margin-right: 0.75rem;
+            width: 1.25rem;
+            text-align: center;
+        }
+
+        .nav-link.active, .nav-link:hover {
+            background-color: var(--primary-light);
+            color: white;
+        }
+
+        .nav-link.active i, .nav-link:hover i {
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .header-title h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .header-title p {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-bar {
+            position: relative;
+        }
+
+        .search-bar input {
+            padding: 0.625rem 1rem 0.625rem 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: 0.375rem;
+            width: 240px;
+            font-size: 0.875rem;
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+
+        .notification-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            background-color: var(--danger);
+            border-radius: 50%;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card-title {
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .stat-card-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card-change {
+            display: flex;
+            align-items: center;
+            font-size: 0.875rem;
+        }
+
+        .stat-card-change.positive {
+            color: var(--success);
+        }
+
+        .stat-card-change.negative {
+            color: var(--danger);
+        }
+
+        .stat-card-change i {
+            margin-right: 0.25rem;
+        }
+
+        /* Recent Orders */
+        .section {
+            background-color: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .section-link {
+            color: var(--primary);
+            font-size: 0.875rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 0.75rem 1rem;
+            background-color: #f8fafc;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748b;
+        }
+
+        td {
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.875rem;
+        }
+
+        .order-id {
+            color: var(--primary);
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-processing {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-shipped {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-cancelled {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .action-btn {
+            padding: 0.375rem 0.75rem;
+            background-color: var(--light);
+            border: none;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        /* Product Performance */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .product-image {
+            height: 160px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-details {
+            padding: 1rem;
+        }
+
+        .product-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .product-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .product-stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 0.75rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 240px;
+                padding: 1rem;
+            }
+            .main-content {
+                margin-left: 240px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                position: fixed;
+                z-index: 50;
+                transition: transform 0.3s;
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .search-bar input {
+                width: 100%;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            color: var(--secondary);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="logo">
+                <i class="fas fa-tshirt"></i> Vastra
+            </div>
+            
+            <div class="seller-info">
+                <div class="seller-avatar">JD</div>
+                <div class="seller-details">
+                    <h4>John's Fashion</h4>
+                    <p>Premium Seller</p>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <div class="menu-title">Main</div>
+                <a href="#" class="nav-link active">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-shopping-bag"></i> Products
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-truck"></i> Orders
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Analytics
+                </a>
+                
+                <div class="menu-title">Management</div>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-users"></i> Customers
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-comments"></i> Reviews
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-wallet"></i> Earnings
+                </a>
+                
+                <div class="menu-title">Settings</div>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-store"></i> Store Settings
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-user-cog"></i> Account
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-title">
+                    <h1>Seller Dashboard</h1>
+                    <p>Welcome back, John! Here's what's happening with your store today.</p>
+                </div>
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search...">
+                    </div>
+                    <button class="mobile-menu-btn" id="mobileMenuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge"></span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-title">Total Revenue</div>
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-card-value">₹24,780</div>
+                    <div class="stat-card-change positive">
+                        <i class="fas fa-arrow-up"></i> 12.5% from last month
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-title">Total Orders</div>
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <div class="stat-card-value">1,842</div>
+                    <div class="stat-card-change positive">
+                        <i class="fas fa-arrow-up"></i> 8.3% from last month
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-title">Conversion Rate</div>
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div class="stat-card-value">3.42%</div>
+                    <div class="stat-card-change positive">
+                        <i class="fas fa-arrow-up"></i> 1.2% from last month
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-title">Return Rate</div>
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="stat-card-value">2.8%</div>
+                    <div class="stat-card-change negative">
+                        <i class="fas fa-arrow-down"></i> 0.5% from last month
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Orders Section -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Recent Orders</h2>
+                    <a href="#" class="section-link">View All</a>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="#" class="order-id">#VAST-7841</a></td>
+                            <td>John Smith</td>
+                            <td>May 15, 2023</td>
+                            <td>₹2,499</td>
+                            <td><span class="status-badge status-shipped">Shipped</span></td>
+                            <td><button class="action-btn">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" class="order-id">#VAST-7840</a></td>
+                            <td>Sarah Johnson</td>
+                            <td>May 14, 2023</td>
+                            <td>₹1,799</td>
+                            <td><span class="status-badge status-processing">Processing</span></td>
+                            <td><button class="action-btn">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" class="order-id">#VAST-7839</a></td>
+                            <td>Michael Brown</td>
+                            <td>May 12, 2023</td>
+                            <td>₹3,299</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td><button class="action-btn">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" class="order-id">#VAST-7838</a></td>
+                            <td>Emily Davis</td>
+                            <td>May 10, 2023</td>
+                            <td>₹1,599</td>
+                            <td><span class="status-badge status-cancelled">Cancelled</span></td>
+                            <td><button class="action-btn">View</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Product Performance Section -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Top Performing Products</h2>
+                    <a href="#" class="section-link">View All</a>
+                </div>
+                
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30" alt="Product">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Premium Wireless Headphones</h3>
+                            <div class="product-stats">
+                                <div class="product-stat">
+                                    <div class="stat-value">₹12,450</div>
+                                    <div class="stat-label">Revenue</div>
+                                </div>
+                                <div class="product-stat">
+                                    <div class="stat-value">78</div>
+                                    <div class="stat-label">Sales</div>
+                                </div>
+                                <div class="product-stat">
+                                    <div class="stat-value">4.8</div>
+                                    <div class="stat-label">Rating</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12" alt="Product">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Smart Fitness Watch</h3>
+                            <div class="product-stats">
+                                <div class="product-stat">
+                                    <div class="stat-value">₹8,920</div>
+                                    <div class="stat-label">Revenue</div>
+                                </div>
+                                <div class="product-stat">
+                                    <div class="stat-value">56</div>
+                                    <div class="stat-label">Sales</div>
+                                </div>
+                                <div class="product-stat">
+                                    <div class="stat-value">4.6</div>
+                                    <div class="stat-label">Rating</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e" alt="Product">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Wireless Earbuds Pro</h3>
+                            <div class="product-stats">
+                                <div class="product-stat">
+                                    <div class="stat-value">₹6,750</div>
+                                    <div class="stat-label">Revenue</div>
+                                </div>
+                                <div class="product-stat">
+                                    <div class="stat-value">45</div>
+                                    <div class="stat-label">Sales</div>
+                                </div>
+                                <div class="product-stat">
+                                    <div class="stat-value">4.4</div>
+                                    <div class="stat-label">Rating</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const sidebar = document.getElementById('sidebar');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            sidebar.classList.add('active');
+        });
+
+        mobileMenuBtn.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (event) => {
+            const isClickInsideSidebar = sidebar.contains(event.target);
+            const isClickOnMenuToggle = mobileMenuToggle.contains(event.target);
+            
+            if (!isClickInsideSidebar && !isClickOnMenuToggle && window.innerWidth <= 768) {
+                sidebar.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

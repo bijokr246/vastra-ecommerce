@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Seller Dashboard | Vastra</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="sidebar">
+    <h2>VASTRA</h2>
+    <ul>
+      <li><a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+      <li><a href="my-products.html"><i class="fas fa-box"></i> My Products</a></li>
+      <li><a href="add-product.html"><i class="fas fa-plus-circle"></i> Add Product</a></li>
+      <li><a href="orders.html"><i class="fas fa-clipboard-list"></i> Orders</a></li>
+      <li><a href="my-shop.html"><i class="fas fa-store"></i> My Shop</a></li>
+      <li><a href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main">
+    <div class="header">
+      <h1>Welcome, Seller</h1>
+      <div><i class="fas fa-user-circle"></i> seller@vastra.com</div>
+    </div>
+    <div class="card-container">
+      <div class="card">
+        <i class="fas fa-box"></i>
+        <h3>Total Products</h3>
+        <p>48</p>
+      </div>
+      <div class="card">
+        <i class="fas fa-clock"></i>
+        <h3>Pending Products</h3>
+        <p>6</p>
+      </div>
+      <div class="card">
+        <i class="fas fa-receipt"></i>
+        <h3>Orders</h3>
+        <p>145</p>
+      </div>
+    </div>
+    <div class="content">
+      <h2>Recent Products</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cotton Kurti</td>
+            <td>Women</td>
+            <td>₹1,200</td>
+            <td><span class="status approved">Approved</span></td>
+          </tr>
+          <tr>
+            <td>Linen Shirt</td>
+            <td>Men</td>
+            <td>₹990</td>
+            <td><span class="status pending">Pending</span></td>
+          </tr>
+          <tr>
+            <td>Kids Denim Shorts</td>
+            <td>Kids</td>
+            <td>₹450</td>
+            <td><span class="status approved">Approved</span></td>
+          </tr>
+           <tr>
+            <td>Silk Saree</td>
+            <td>Women</td>
+            <td>₹3,500</td>
+            <td><span class="status approved">Approved</span></td>
+          </tr>
+           <tr>
+            <td>Formal Trousers</td>
+            <td>Men</td>
+            <td>₹1,800</td>
+            <td><span class="status rejected">Rejected</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

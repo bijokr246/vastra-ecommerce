@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Orders | Vastra</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="sidebar">
+    <h2>VASTRA</h2>
+    <ul>
+      <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+      <li><a href="my-products.html"><i class="fas fa-box"></i> My Products</a></li>
+      <li><a href="add-product.html"><i class="fas fa-plus-circle"></i> Add Product</a></li>
+      <li><a href="orders.html" class="active"><i class="fas fa-clipboard-list"></i> Orders</a></li>
+      <li><a href="my-shop.html"><i class="fas fa-store"></i> My Shop</a></li>
+      <li><a href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+    </ul>
+  </div>
+  <div class="main">
+    <div class="header"><h1>Orders</h1></div>
+    <div class="content">
+      <table>
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Date</th>
+            <th>Customer</th>
+            <th>Total</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#V-5821</td>
+            <td>28-04-2024</td>
+            <td>Anjali Sharma</td>
+            <td>₹1,200</td>
+            <td><span class="status shipped">Shipped</span></td>
+          </tr>
+          <tr>
+            <td>#V-5820</td>
+            <td>27-04-2024</td>
+            <td>Rohan Mehta</td>
+            <td>₹450</td>
+            <td><span class="status delivered">Delivered</span></td>
+          </tr>
+          <tr>
+            <td>#V-5819</td>
+            <td>27-04-2024</td>
+            <td>Priya Singh</td>
+            <td>₹990</td>
+            <td><span class="status processing">Processing</span></td>
+          </tr>
+          <tr>
+            <td>#V-5818</td>
+            <td>26-04-2024</td>
+            <td>Vikram Kumar</td>
+            <td>₹1,800</td>
+            <td><span class="status shipped">Shipped</span></td>
+          </tr>
+           <tr>
+            <td>#V-5817</td>
+            <td>25-04-2024</td>
+            <td>Sneha Patel</td>
+            <td>₹3,500</td>
+            <td><span class="status cancelled">Cancelled</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

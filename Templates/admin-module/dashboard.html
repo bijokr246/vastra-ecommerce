@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vastra | Admin Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="admin-style.css">
+</head>
+
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-header"><a href="#">VASTRA</a></div>
+    <ul class="sidebar-nav">
+      <li><a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt fa-fw"></i> <span>Dashboard</span></a>
+      </li>
+      <li><a href="manage-users.html"><i class="fas fa-users fa-fw"></i> <span>Manage Users</span></a></li>
+      <li><a href="seller-requests.html"><i class="fas fa-store fa-fw"></i> <span>Seller Requests</span></a></li>
+      <li><a href="product-approvals.html"><i class="fas fa-box-open fa-fw"></i> <span>Product Approvals</span></a></li>
+      <li><a href="manage-categories.html"><i class="fas fa-sitemap fa-fw"></i> <span>Manage Categories</span></a></li>
+      <li><a href="orders.html"><i class="fas fa-receipt fa-fw"></i> <span>All Orders</span></a></li>
+
+      <li class="logout-item">
+        <a href="#"><i class="fas fa-sign-out-alt fa-fw"></i> <span>Logout</span></a>
+      </li>
+    </ul>
+  </aside>
+
+  <div class="main-content">
+    <header class="header">
+      <h1>Welcome Back, Admin</h1>
+      <div class="admin-profile"><a href="#"><i class="fas fa-user-circle"></i> Admin User</a></div>
+    </header>
+
+    <main>
+      <div class="cards-grid">
+        <div class="stat-card">
+          <div class="icon"><i class="fas fa-users"></i></div>
+          <div class="info">
+            <h3>Total Users</h3>
+            <p>1,250</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="icon"><i class="fas fa-store"></i></div>
+          <div class="info">
+            <h3>Pending Sellers</h3>
+            <p>12</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="icon"><i class="fas fa-box-open"></i></div>
+          <div class="info">
+            <h3>Pending Products</h3>
+            <p>87</p>
+          </div>
+        </div>
+        <!-- <div class="stat-card">
+          <div class="icon"><i class="fas fa-chart-line"></i></div>
+          <div class="info">
+            <h3>Sales (Month)</h3>
+            <p>₹4.5L</p>
+          </div>
+        </div> -->
+      </div>
+      <section class="content-card">
+        <h2>Recent Orders</h2>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#8924</td>
+              <td>Priya Patel</td>
+              <td>₹2,499</td>
+              <td><span class="status shipped">Shipped</span></td>
+              <td>2023-10-26</td>
+            </tr>
+            <tr>
+              <td>#8923</td>
+              <td>Rohan Sharma</td>
+              <td>₹899</td>
+              <td><span class="status processing">Processing</span></td>
+              <td>2023-10-26</td>
+            </tr>
+            <tr>
+              <td>#8922</td>
+              <td>Amit Kumar</td>
+              <td>₹1,250</td>
+              <td><span class="status canceled">Canceled</span></td>
+              <td>2023-10-25</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+</body>
+
+</html>

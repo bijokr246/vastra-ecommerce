@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All Orders | Vastra Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="admin-style.css">
+</head>
+
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-header"><a href="#">VASTRA</a></div>
+    <ul class="sidebar-nav">
+      <li><a href="dashboard.html"><i class="fas fa-tachometer-alt fa-fw"></i> <span>Dashboard</span></a></li>
+      <li><a href="manage-users.html"><i class="fas fa-users fa-fw"></i> <span>Manage Users</span></a></li>
+      <li><a href="seller-requests.html"><i class="fas fa-store fa-fw"></i> <span>Seller Requests</span></a></li>
+      <li><a href="product-approvals.html"><i class="fas fa-box-open fa-fw"></i> <span>Product Approvals</span></a></li>
+      <li><a href="manage-categories.html"><i class="fas fa-sitemap fa-fw"></i> <span>Manage Categories</span></a></li>
+      <li><a href="orders.html" class="active"><i class="fas fa-receipt fa-fw"></i> <span>All Orders</span></a></li>
+      
+      <li class="logout-item">
+        <a href="#"><i class="fas fa-sign-out-alt fa-fw"></i> <span>Logout</span></a>
+      </li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    <h1 class="page-header">Order History</h1>
+    <section class="content-card">
+      <div class="page-header">
+        <h2>All Orders</h2>
+        <input type="text" placeholder="Search by Order ID or Buyer..." />
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Buyer</th>
+            <th>Items</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#10023</td>
+            <td>Deepa Menon</td>
+            <td>3</td>
+            <td>₹2,760</td>
+            <td><span class="status shipped">Shipped</span></td>
+            <td>2025-07-15</td>
+          </tr>
+          <tr>
+            <td>#10022</td>
+            <td>Aarav Sharma</td>
+            <td>1</td>
+            <td>₹1,299</td>
+            <td><span class="status pending">Processing</span></td>
+            <td>2025-07-15</td>
+          </tr>
+          <tr>
+            <td>#10021</td>
+            <td>Ritika Mehra</td>
+            <td>2</td>
+            <td>₹950</td>
+            <td><span class="status shipped">Shipped</span></td>
+            <td>2025-07-14</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+
+</html>

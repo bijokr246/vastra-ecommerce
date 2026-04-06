@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | Vastra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff3f6c;
+            --secondary: #282c3f;
+            --light-gray: #f5f5f6;
+            --dark-gray: #696b79;
+            --white: #ffffff;
+            --success: #03a685;
+            --success-light: #e6f6f3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            color: var(--secondary);
+        }
+
+        /* Header/Navbar */
+        .navbar {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-icons a {
+            color: var(--secondary);
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+
+        /* Main Container for Centering */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 15px;
+        }
+
+        /* Cart Section */
+        .cart-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        @media (min-width: 992px) {
+            .cart-container {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+        }
+
+        .cart-items {
+            flex: 1;
+        }
+
+        .cart-summary {
+            width: 100%;
+        }
+
+        @media (min-width: 992px) {
+            .cart-summary {
+                width: 380px;
+            }
+        }
+
+        .cart-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        /* Cart Item */
+        .cart-item {
+            display: flex;
+            background-color: var(--white);
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .item-image {
+            width: 120px;
+            height: 150px;
+            flex-shrink: 0;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-details {
+            flex: 1;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .item-brand {
+            color: var(--dark-gray);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .item-price {
+            font-weight: 600;
+            color: var(--secondary);
+            font-size: 16px;
+            margin-top: auto;
+        }
+
+        .price-original {
+            text-decoration: line-through;
+            color: var(--dark-gray);
+            font-size: 14px;
+            margin-left: 8px;
+        }
+
+        .item-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-btn {
+            background-color: var(--light-gray);
+            border: 1px solid #ddd;
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .quantity-btn.minus {
+            border-radius: 4px 0 0 4px;
+        }
+
+        .quantity-btn.plus {
+            border-radius: 0 4px 4px 0;
+        }
+
+        .quantity-input {
+            width: 40px;
+            height: 30px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-left: none;
+            border-right: none;
+            font-weight: 500;
+        }
+
+        /* === NEW STYLES for the REMOVE button === */
+        .remove-btn-text {
+            background-color: var(--white);
+            border: 1px solid #ddd;
+            color: var(--dark-gray);
+            font-weight: 600;
+            font-size: 12px;
+            padding: 5px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-left: 15px;
+        }
+
+        .remove-btn-text:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* Simplified Cart Summary */
+        .summary-card {
+            background-color: var(--white);
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            position: sticky;
+            top: 100px;
+        }
+
+        .summary-divider {
+            border: 0;
+            border-top: 1px solid #eee;
+            margin: 20px 0;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .summary-row span:first-child {
+            color: var(--dark-gray);
+        }
+
+        .summary-row span:last-child {
+            font-weight: 600;
+        }
+
+        .total-row {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .total-row span:last-child {
+            color: var(--secondary);
+        }
+
+        .savings-highlight {
+            background-color: var(--success-light);
+            color: var(--success);
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 700;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        /* Empty Cart */
+        .empty-cart {
+            text-align: center;
+            padding: 60px 0;
+            background-color: var(--white);
+            border-radius: 8px;
+        }
+
+        .empty-cart i {
+            font-size: 60px;
+            color: var(--light-gray);
+            margin-bottom: 20px;
+        }
+
+        .empty-cart h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .empty-cart-btn {
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-decoration: none;
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        @media (max-width: 767px) {
+            .nav-links {
+                display: none;
+            }
+
+            .cart-item {
+                flex-direction: column;
+            }
+
+            .item-image {
+                width: 100%;
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation (Vastra) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="home.html" class="logo">VASTRA</a>
+            <div class="nav-links">
+                <a href="home.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="#">Categories</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-icons">
+                <a href="#"><i class="fas fa-search"></i></a>
+                <a href="#"><i class="far fa-user"></i></a>
+                <a href="#"><i class="far fa-heart"></i></a>
+                <a href="cart.html" class="cart-count" data-count="2">
+                    <i class="fas fa-shopping-bag"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Content -->
+    <div class="container">
+        <h2 class="cart-title">Shopping Cart</h2>
+
+        <div class="cart-container">
+            <!-- Left Column: Cart Items -->
+            <div class="cart-items">
+                <div class="cart-item" data-id="prod1" data-price="799" data-original-price="1599">
+                    <div class="item-image"><img
+                            src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=1887&auto=format&fit=crop"
+                            alt="Men's Casual Shirt"></div>
+                    <div class="item-details">
+                        <p class="item-brand">ELLESSE</p>
+                        <h3 class="item-title">Men's Slim Fit Casual Shirt</h3>
+                        <div class="item-actions">
+                            <div class="quantity-selector">
+                                <button class="quantity-btn minus" onclick="updateQuantity('prod1', -1)">-</button>
+                                <input type="text" readonly class="quantity-input" value="1" id="quantity-prod1">
+                                <button class="quantity-btn plus" onclick="updateQuantity('prod1', 1)">+</button>
+                                <button class="remove-btn-text" onclick="removeItem('prod1')">REMOVE</button>
+                            </div>
+                            <div class="item-price">₹799 <span class="price-original">₹1599</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cart-item" data-id="prod2" data-price="2999" data-original-price="3749">
+                    <div class="item-image"><img
+                            src="https://images.unsplash.com/photo-1608231387042-66d1673070a5?q=80&w=1974&auto=format&fit=crop"
+                            alt="Casual Sneakers"></div>
+                    <div class="item-details">
+                        <p class="item-brand">NIKE</p>
+                        <h3 class="item-title">Men's Casual Sneakers</h3>
+                        <div class="item-actions">
+                            <div class="quantity-selector">
+                                <button class="quantity-btn minus" onclick="updateQuantity('prod2', -1)">-</button>
+                                <input type="text" readonly class="quantity-input" value="1" id="quantity-prod2">
+                                <button class="quantity-btn plus" onclick="updateQuantity('prod2', 1)">+</button>
+                                <button class="remove-btn-text" onclick="removeItem('prod2')">REMOVE</button>
+                            </div>
+                            <div class="item-price">₹2999 <span class="price-original">₹3749</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Cart Summary -->
+            <div class="cart-summary">
+                <div class="summary-card">
+                    <h3 style="font-weight: 600; margin-bottom: 20px;">PRICE DETAILS</h3>
+                    <div class="summary-row">
+                        <span>Total MRP</span>
+                        <span id="summary-mrp">₹0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Discount on MRP</span>
+                        <span id="summary-discount" style="color: var(--success);">-₹0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Delivery Charges</span>
+                        <span id="summary-delivery">FREE</span>
+                    </div>
+                    <hr class="summary-divider">
+                    <div class="summary-row total-row">
+                        <span>Total Amount</span>
+                        <span id="summary-total">₹0</span>
+                    </div>
+                    <div class="savings-highlight">
+                        <i class="fas fa-tags"></i> <span id="summary-savings">You will save ₹0 on this order</span>
+                    </div>
+                    <button class="checkout-btn">PLACE ORDER</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateQuantity(productId, change) {
+            const quantityInput = document.getElementById(`quantity-${productId}`);
+            let currentQuantity = parseInt(quantityInput.value);
+            currentQuantity += change;
+            if (currentQuantity >= 1) {
+                quantityInput.value = currentQuantity;
+                updatePrices();
+            }
+        }
+        function removeItem(productId) {
+            const item = document.querySelector(`.cart-item[data-id="${productId}"]`);
+            if (item) item.remove();
+            updateCartCount();
+            updatePrices();
+            if (document.querySelectorAll('.cart-item').length === 0) {
+                showEmptyCart();
+            }
+        }
+        function updateCartCount() {
+            const itemCount = document.querySelectorAll('.cart-item').length;
+            const cartIcon = document.querySelector('.cart-count');
+            if (cartIcon) cartIcon.setAttribute('data-count', itemCount);
+            // Also update the title if it exists
+            const cartTitle = document.querySelector('.cart-title');
+            if (cartTitle) {
+                cartTitle.textContent = `Shopping Cart (${itemCount})`;
+            }
+        }
+        function updatePrices() {
+            const cartItems = document.querySelectorAll('.cart-item');
+            let totalMRP = 0;
+            let totalAmount = 0;
+            if (cartItems.length === 0) {
+                if (document.getElementById('summary-mrp')) {
+                    document.getElementById('summary-mrp').textContent = '₹0';
+                    document.getElementById('summary-discount').textContent = '-₹0';
+                    document.getElementById('summary-total').textContent = '₹0';
+                    document.getElementById('summary-savings').textContent = 'You will save ₹0';
+                }
+                return;
+            }
+            cartItems.forEach(item => {
+                const price = parseFloat(item.dataset.price);
+                const originalPrice = parseFloat(item.dataset.originalPrice);
+                const quantity = parseInt(item.querySelector('.quantity-input').value);
+                totalMRP += originalPrice * quantity;
+                totalAmount += price * quantity;
+            });
+            const totalDiscount = totalMRP - totalAmount;
+            document.getElementById('summary-mrp').textContent = `₹${totalMRP.toFixed(2)}`;
+            document.getElementById('summary-discount').textContent = `-₹${totalDiscount.toFixed(2)}`;
+            document.getElementById('summary-total').textContent = `₹${totalAmount.toFixed(2)}`;
+            document.getElementById('summary-savings').textContent = `You will save ₹${totalDiscount.toFixed(2)} on this order`;
+        }
+        function showEmptyCart() {
+            const container = document.querySelector('.container');
+            if (container) {
+                container.innerHTML = `
+                    <div class="empty-cart" style="width:100%;">
+                        <i class="fas fa-shopping-bag"></i>
+                        <h3>Your shopping cart is empty!</h3>
+                        <p>Looks like you haven't added anything to your cart yet.</p>
+                        <a href="shop.html" class="empty-cart-btn">Continue Shopping</a>
+                    </div>
+                `;
+            }
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartCount();
+            updatePrices();
+            if (document.querySelectorAll('.cart-item').length === 0) {
+                showEmptyCart();
+            }
+            const checkoutBtn = document.querySelector('.checkout-btn');
+            if (checkoutBtn) {
+                checkoutBtn.addEventListener('click', () => {
+                    alert('Redirecting to checkout...');
+                    document.querySelectorAll('.cart-item').forEach(item => item.remove());
+                    updateCartCount();
+                    updatePrices();
+                    showEmptyCart();
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

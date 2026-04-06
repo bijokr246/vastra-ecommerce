@@ -1,0 +1,697 @@
+<?php
+// Start the session to maintain login status
+session_start();
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop by Category | Vastra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* === EXISTING STYLES (Copy from home.php) === */
+        :root {
+            --primary: #ff3f6c;
+            --primary-dark: #e6395a;
+            --secondary: #282c3f;
+            --light-gray: #f5f5f6;
+            --dark-gray: #696b79;
+            --white: #ffffff;
+            --black: #000000;
+            --error: #c0392b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--secondary);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Navbar & Footer Styles (Copied from home.php, no changes needed) */
+        .navbar {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-icons a {
+            color: var(--secondary);
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+
+        .nav-icons a:hover {
+            color: var(--primary);
+        }
+
+        .profile-card-container {
+            position: relative;
+        }
+
+        /* Needed for dropdown */
+        footer {
+            background-color: #f5f5f5;
+            padding: 30px 0;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Add other reused styles like profile card, mobile menu etc. here if needed */
+
+        /* Product Card Styles (Copied from home.php, no changes needed) */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 992px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .product-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #eee;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image {
+            position: relative;
+            height: 200px;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--primary);
+            color: var(--white);
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 2px;
+            font-weight: bold;
+        }
+
+        .wishlist-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            color: #ccc;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .wishlist-icon:hover {
+            color: var(--primary);
+        }
+
+        .quick-view-btn {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--white);
+            color: var(--secondary);
+            font-size: 12px;
+            font-weight: bold;
+            padding: 5px 15px;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            cursor: pointer;
+        }
+
+        .product-card:hover .quick-view-btn {
+            opacity: 1;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .product-brand {
+            font-size: 12px;
+            color: var(--dark-gray);
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .current-price {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .price-original {
+            font-size: 12px;
+            color: var(--dark-gray);
+            text-decoration: line-through;
+            margin-left: 8px;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .rating-stars {
+            color: #ffc107;
+            font-size: 12px;
+        }
+
+        .rating-count {
+            font-size: 12px;
+            color: var(--dark-gray);
+            margin-left: 5px;
+        }
+
+        .add-to-bag {
+            width: 100%;
+            padding: 8px 0;
+            background-color: var(--light-gray);
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-to-bag:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* === NEW STYLES FOR CATEGORY PAGE === */
+
+        .page-header {
+            padding: 20px 0;
+            background-color: var(--light-gray);
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        /* Breadcrumbs */
+        .breadcrumb {
+            list-style: none;
+            display: flex;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .breadcrumb a {
+            color: var(--dark-gray);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--primary);
+        }
+
+        .breadcrumb .current {
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        .breadcrumb i {
+            font-size: 10px;
+            color: #ccc;
+        }
+
+        /* Main Layout */
+        .category-wrapper {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        @media (min-width: 992px) {
+            .category-wrapper {
+                grid-template-columns: 260px 1fr;
+                /* Sidebar and main content */
+            }
+        }
+
+        /* Filters Sidebar */
+        .filters-sidebar {
+            background-color: #fcfcfc;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            align-self: start;
+            /* Sticks to the top of the grid cell */
+        }
+
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .filter-header h3 {
+            font-size: 18px;
+        }
+
+        .filter-header .clear-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .filter-group {
+            margin-bottom: 25px;
+        }
+
+        .filter-group h4 {
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .filter-group ul {
+            list-style: none;
+        }
+
+        .filter-group li {
+            margin-bottom: 10px;
+        }
+
+        .filter-group label {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            cursor: pointer;
+            color: var(--dark-gray);
+        }
+
+        .filter-group input[type="checkbox"],
+        .filter-group input[type="radio"] {
+            margin-right: 10px;
+            accent-color: var(--primary);
+            /* Modern way to color checkboxes */
+        }
+
+        /* Product Content Area */
+        .category-header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .category-header p {
+            font-size: 14px;
+            color: var(--dark-gray);
+        }
+
+        .products-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 25px 0;
+            padding: 10px;
+            background-color: var(--light-gray);
+            border-radius: 5px;
+        }
+
+        .product-count {
+            font-size: 14px;
+            color: var(--dark-gray);
+        }
+
+        .sort-options select {
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            background-color: var(--white);
+            font-size: 14px;
+        }
+
+        /* Pagination */
+        .pagination-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .pagination {
+            list-style: none;
+            display: flex;
+            gap: 5px;
+        }
+
+        .pagination a {
+            display: block;
+            padding: 8px 14px;
+            text-decoration: none;
+            color: var(--secondary);
+            background-color: var(--white);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .pagination a:hover {
+            background-color: var(--light-gray);
+            border-color: #ccc;
+        }
+
+        .pagination .active a {
+            background-color: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+            font-weight: bold;
+        }
+
+        .pagination .disabled a {
+            color: #ccc;
+            pointer-events: none;
+        }
+
+        /* Mobile Filter Button and Responsive Sidebar */
+        .mobile-filter-btn {
+            display: none;
+            /* Hidden by default */
+        }
+
+        @media (max-width: 991px) {
+            .filters-sidebar {
+                display: none;
+                /* Hide sidebar on mobile by default */
+            }
+
+            .filters-sidebar.active {
+                display: block;
+                /* Show it when active */
+                margin-bottom: 20px;
+            }
+
+            .mobile-filter-btn {
+                display: block;
+                width: 100%;
+                padding: 12px;
+                background-color: var(--secondary);
+                color: var(--white);
+                border: none;
+                border-radius: 5px;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 1. Header (Same as your homepage) -->
+    <nav class="navbar">
+        <!-- You can copy your full navbar HTML here from home.php -->
+        <div class="container nav-container">
+            <a href="index.html" class="logo">VASTRA</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="category.html">Categories</a>
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+            </div>
+            <!-- ... your icons and profile card logic ... -->
+        </div>
+    </nav>
+
+    <!-- 2. Page Header with Breadcrumbs -->
+    <header class="page-header">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li><a href="home.php">Home</a></li>
+                    <li><i class="fas fa-chevron-right"></i></li>
+                    <li class="current">Categories</li>
+                </ol>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 3. Main Content Area -->
+    <div class="container">
+        <div class="category-wrapper">
+
+            <!-- Filter Sidebar (Left Column) -->
+            <aside class="filters-sidebar" id="filters-sidebar">
+                <div class="filter-header">
+                    <h3>Filters</h3>
+                    <button class="clear-btn">Clear All</button>
+                </div>
+
+                <div class="filter-group">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><label><input type="checkbox" name="category" value="tops"> Tops & Tees</label></li>
+                        <li><label><input type="checkbox" name="category" value="dresses"> Dresses</label></li>
+                        <li><label><input type="checkbox" name="category" value="jeans"> Jeans & Jeggings</label></li>
+                        <li><label><input type="checkbox" name="category" value="kurtas"> Kurtas & Suits</label></li>
+                        <li><label><input type="checkbox" name="category" value="sarees"> Sarees</label></li>
+                    </ul>
+                </div>
+
+                <div class="filter-group">
+                    <h4>Brand</h4>
+                    <ul>
+                        <li><label><input type="checkbox" name="brand" value="levis"> Levis</label></li>
+                        <li><label><input type="checkbox" name="brand" value="biba"> Biba</label></li>
+                        <li><label><input type="checkbox" name="brand" value="nike"> Nike</label></li>
+                        <li><label><input type="checkbox" name="brand" value="puma"> Puma</label></li>
+                    </ul>
+                </div>
+
+                <div class="filter-group">
+                    <h4>Discount Range</h4>
+                    <ul>
+                        <li><label><input type="radio" name="discount" value="10"> 10% and above</label></li>
+                        <li><label><input type="radio" name="discount" value="30"> 30% and above</label></li>
+                        <li><label><input type="radio" name="discount" value="50"> 50% and above</label></li>
+                        <li><label><input type="radio" name="discount" value="70"> 70% and above</label></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Product Display (Right Column) -->
+            <main class="products-main">
+                <div class="category-header">
+                    <h1>Men's Fashion</h1>
+                    <p>Discover the best in men's fashion. From casual wear to formal attire, find your perfect style
+                        here.</p>
+                </div>
+
+                <!-- Mobile Filter Toggle Button -->
+                <button class="mobile-filter-btn" id="mobile-filter-toggle">
+                    <i class="fas fa-filter"></i> Show Filters
+                </button>
+
+                <div class="products-toolbar">
+                    <div class="product-count">Showing 1–9 of 84 products</div>
+                    <div class="sort-options">
+                        <select name="sort">
+                            <option value="recommended">Sort by: Recommended</option>
+                            <option value="price_asc">Price: Low to High</option>
+                            <option value="price_desc">Price: High to Low</option>
+                            <option value="newest">Newest First</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Product Grid (using your existing product card style) -->
+                <div class="products-grid">
+                    <!-- This is where your PHP loop will generate product cards -->
+                    <!-- Sample Product 1 -->
+                    <div class="product-card">
+                        <div class="product-image"> <img
+                                src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=1887&auto=format&fit=crop"
+                                alt="Product"> <span class="discount-badge">50% OFF</span> <i
+                                class="far fa-heart wishlist-icon"></i> <button class="quick-view-btn">QUICK
+                                VIEW</button> </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Men's Slim Fit T-Shirt</h3>
+                            <p class="product-brand">ELLESSE</p>
+                            <div class="product-price"> <span class="current-price">₹799</span> <span
+                                    class="price-original">₹1599</span> </div>
+                            <div class="product-rating">
+                                <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                </div> <span class="rating-count">(25)</span>
+                            </div> <button class="add-to-bag">Add to Bag</button>
+                        </div>
+                    </div>
+                    <!-- Sample Product 2 -->
+                    <div class="product-card">
+                        <div class="product-image"> <img
+                                src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=1887&auto=format&fit=crop"
+                                alt="Product"> <i class="far fa-heart wishlist-icon"></i> <button
+                                class="quick-view-btn">QUICK VIEW</button> </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Casual Checkered Shirt</h3>
+                            <p class="product-brand">HIGHLANDER</p>
+                            <div class="product-price"> <span class="current-price">₹899</span> </div>
+                            <div class="product-rating">
+                                <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div> <span class="rating-count">(15)</span>
+                            </div> <button class="add-to-bag">Add to Bag</button>
+                        </div>
+                    </div>
+                    <!-- Add more sample product cards here (copy-paste) -->
+                    <div class="product-card">
+                        <div class="product-image"> <img
+                                src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=1887&auto=format&fit=crop"
+                                alt="Product"> <span class="discount-badge">20% OFF</span> <i
+                                class="far fa-heart wishlist-icon"></i> <button class="quick-view-btn">QUICK
+                                VIEW</button> </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Men's Casual Sneakers</h3>
+                            <p class="product-brand">NIKE</p>
+                            <div class="product-price"> <span class="current-price">₹2999</span> <span
+                                    class="price-original">₹3749</span> </div>
+                            <div class="product-rating">
+                                <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                </div> <span class="rating-count">(30)</span>
+                            </div> <button class="add-to-bag">Add to Bag</button>
+                        </div>
+                    </div>
+                    <!-- ... 6 more sample cards -->
+                </div>
+
+                <!-- Pagination -->
+                <nav class="pagination-nav" aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="disabled"><a href="#">« Prev</a></li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">...</a></li>
+                        <li><a href="#">10</a></li>
+                        <li><a href="#">Next »</a></li>
+                    </ul>
+                </nav>
+            </main>
+        </div>
+    </div>
+
+    <!-- 4. Footer (Same as your homepage) -->
+    <footer>
+        <div class="container footer-content">
+            <!-- Your footer HTML -->
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterToggleButton = document.getElementById('mobile-filter-toggle');
+            const sidebar = document.getElementById('filters-sidebar');
+
+            if (filterToggleButton && sidebar) {
+                filterToggleButton.addEventListener('click', () => {
+                    sidebar.classList.toggle('active');
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

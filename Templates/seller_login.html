@@ -1,0 +1,210 @@
+<?php
+session_start();
+include "config.php"; 
+
+// If a seller is already logged in, redirect them to their dashboard
+if (isset($_SESSION['is_logged_in']) && isset($_SESSION['seller_id'])) {
+    header('Location: seller/dashboard.php'); // <-- IMPORTANT: Make sure this is your seller dashboard path
+    exit();
+}
+
+if (isset($_POST['login'])) {
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+    $errors = [];
+
+    //--- VALIDATE DATA --- 
+    if (empty($email)) {
+        $errors['email'] = 'Email address is required.';
+    } 
+    if (empty($password)) {
+        $errors['password'] = 'Password is required.';
+    }
+
+    // --- PROCESS DATA ---
+    if (empty($errors)) {
+        // **SECURITY FIX: Use Prepared Statements to prevent SQL Injection**
+        $sql = "SELECT user_id, email, password, role FROM login WHERE email = ? AND role = 'seller'";
+        $stmt = mysqli_prepare($conn, $sql);
+        
+        if ($stmt) {
+            mysqli_stmt_bind_param($stmt, "s", $email);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            if (mysqli_num_rows($result) === 1) {
+                $row = mysqli_fetch_assoc($result);
+                
+                // **SECURITY FIX: Use password_verify() to check hashed passwords**
+                if (password_verify($password, $row['password'])) {
+                    // Password is correct, set session variables
+                    $_SESSION['email'] = $row['email'];
+                    $_SESSION['seller_id'] = $row['user_id']; // Use a specific seller session
+                    $_SESSION['is_logged_in'] = true; 
+
+                    // After setting session, redirect to the seller dashboard.
+                    header('Location: seller/dashboard.php'); // <-- IMPORTANT: Make sure this is your seller dashboard path
+                    exit();
+                } else {
+                    // Password does not match
+                    $errors['general'] = 'Invalid email or password.';
+                }
+            } else {
+                // No seller found with that email
+                $errors['general'] = 'Invalid email or password.';
+            }
+            mysqli_stmt_close($stmt);
+        } else {
+            // Database query preparation failed
+            $errors['general'] = 'A database error occurred. Please try again later.';
+        }
+    }
+    
+    // If there were any errors, store them in the session and redirect back to this page
+    $_SESSION['errors'] = $errors;
+    $_SESSION['old_email'] = $email;
+    header('Location: seller-login.php');
+    exit();
+}
+
+// --- FRONTEND DISPLAY LOGIC ---
+$errors = $_SESSION['errors'] ?? [];
+$old_email = $_SESSION['old_email'] ?? '';
+$general_error = $errors['general'] ?? '';
+
+// Unset the session variables
+unset($_SESSION['errors'], $_SESSION['old_email']);
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Login | Vastra Seller Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- THIS CSS IS IDENTICAL TO YOUR login.php FOR VISUAL CONSISTENCY --- */
+        :root {
+            --primary: #ff3f6c;
+            --primary-dark: #e6395a;
+            --secondary: #282c3f;
+            --light-gray: #f5f5f6;
+            --dark-gray: #696b79;
+            --white: #ffffff;
+            --black: #000000;
+            --error: #c0392b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #fafafa; color: var(--secondary); }
+        .login-container { display: flex; min-height: 100vh; }
+        .login-left { flex: 1; background: linear-gradient(135deg, #ff3f6c 0%, #ff6b8b 100%); display: none; align-items: center; justify-content: center; padding: 2rem; color: var(--white); }
+        @media (min-width: 768px) { .login-left { display: flex; } }
+        .login-left-content { max-width: 400px; text-align: center; }
+        .login-left h1 { font-size: 2.5rem; margin-bottom: 1rem; font-weight: 700; }
+        .login-left p { font-size: 1.1rem; opacity: 0.9; margin-bottom: 2rem; }
+        .login-left img { max-width: 300px; margin: 0 auto; }
+        .login-right { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+        .login-form-container { max-width: 400px; width: 100%; background-color: var(--white); padding: 2.5rem; border-radius: 8px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); }
+        .logo { text-align: center; margin-bottom: 2rem; }
+        .logo h2 { font-size: 2rem; font-weight: 700; color: var(--primary); letter-spacing: 1px; }
+        .login-form h3 { font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--secondary); }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--secondary); }
+        .input-field { position: relative; }
+        .input-field input { width: 100%; padding: 12px 15px 12px 40px; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem; transition: border 0.3s; }
+        .input-field input:focus { outline: none; border-color: var(--primary); }
+        .input-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--dark-gray); }
+        .input-icon-hidden { cursor: pointer; position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--dark-gray); }
+        .login-btn { width: 100%; padding: 12px; background-color: var(--primary); color: var(--white); border: none; border-radius: 5px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background-color 0.3s; margin-top: 1rem; }
+        .login-btn:hover { background-color: var(--primary-dark); }
+        .section-divider { margin: 2rem 0 1.5rem 0; border: none; border-top: 1px solid #eee; }
+        .customer-link { text-align: center; color: var(--dark-gray); font-size: 0.9rem; }
+        .customer-link a { color: var(--secondary); text-decoration: none; font-weight: 500; }
+        .customer-link a:hover { color: var(--primary); }
+        .error-msg { color: var(--error); font-size: 0.9rem; display: block; margin-top: 5px; min-height: 1rem; }
+        .general-error { background-color: #ffebee; color: var(--error); border: 1px solid var(--error); border-radius: 5px; padding: 10px; margin-bottom: 1.5rem; text-align: center; }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <!-- Left Side (Branding for Sellers) -->
+        <div class="login-left">
+            <div class="login-left-content">
+                <h1>Seller Portal</h1>
+                <p>Access your dashboard to manage products, view orders, and grow your business.</p>
+                <img src="https://img.freepik.com/free-vector/data-points-concept-illustration_114360-2374.jpg" alt="Person managing business data and charts">
+            </div>
+        </div>
+
+        <!-- Right Side (Seller Login Form) -->
+        <div class="login-right">
+            <div class="login-form-container">
+                <div class="logo">
+                    <h2>VASTRA</h2>
+                </div>
+
+                <!-- The form now posts to itself -->
+                <form class="login-form" method="POST" action="seller-login.php">
+                    <h3>Seller Account Login</h3>
+
+                    <!-- Display general error message if it exists -->
+                    <?php if (!empty($general_error)): ?>
+                        <div class='general-error'><?php echo htmlspecialchars($general_error); ?></div>
+                    <?php endif; ?>
+
+                    <div class="form-group">
+                        <label for="email">Seller Email Address</label>
+                        <div class="input-field">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="email" name="email" placeholder="Enter your seller email" value="<?php echo htmlspecialchars($old_email); ?>">
+                        </div>
+                        <!-- Display specific email error if it exists -->
+                        <span class="error-msg" id="email-error"><?php echo htmlspecialchars($errors['email'] ?? ''); ?></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-field">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="password" name="password" placeholder="Enter your password">
+                            <i class="fa-regular fa-eye-slash input-icon-hidden" id="iconHidden"></i>
+                        </div>
+                        <!-- Display specific password error if it exists -->
+                        <span class="error-msg" id="password-error"><?php echo htmlspecialchars($errors['password'] ?? ''); ?></span>
+                    </div>
+
+                    <button type="submit" name="login" class="login-btn">Login to Dashboard</button>
+
+                    <hr class="section-divider">
+
+                    <div class="customer-link">
+                        Not a seller? <a href="login.php">Login as a Customer</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // No changes needed for the JS, but I've left it here for completeness.
+        const passwordInput = document.getElementById('password');
+        const iconHidden = document.getElementById("iconHidden");
+
+        iconHidden.addEventListener('click', function () {
+            const isPassword = passwordInput.getAttribute('type') === 'password';
+            if (isPassword) {
+                passwordInput.setAttribute('type', 'text');
+                iconHidden.classList.remove('fa-eye-slash');
+                iconHidden.classList.add('fa-eye');
+            } else {
+                passwordInput.setAttribute('type', 'password');
+                iconHidden.classList.remove('fa-eye');
+                iconHidden.classList.add('fa-eye-slash');
+            }
+        });
+    </script>
+</body>
+</html>

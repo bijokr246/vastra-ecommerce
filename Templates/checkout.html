@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Stylo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff3f6c;
+            --secondary: #282c3f;
+            --light-gray: #f5f5f6;
+            --dark-gray: #696b79;
+            --white: #ffffff;
+            --black: #000000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #fafafa;
+            color: var(--secondary);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        .notification-bar {
+            background-color: var(--black);
+            color: var(--white);
+            text-align: center;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+        .navbar {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-icons a {
+            color: var(--secondary);
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+
+        .nav-icons a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--secondary);
+        }
+
+        .cart-count {
+            position: relative;
+        }
+
+        .cart-count::after {
+            content: attr(data-count);
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Checkout Layout */
+        .checkout-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        @media (min-width: 992px) {
+            .checkout-container {
+                flex-direction: row;
+            }
+        }
+
+        .checkout-main {
+            flex: 1;
+        }
+
+        .checkout-sidebar {
+            width: 100%;
+        }
+
+        @media (min-width: 992px) {
+            .checkout-sidebar {
+                width: 350px;
+            }
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Address Section */
+        .address-section {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .address-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .address-title {
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .change-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .address-details {
+            display: flex;
+            gap: 15px;
+        }
+
+        .address-default {
+            font-weight: 600;
+            color: var(--dark-gray);
+            flex-shrink: 0;
+        }
+
+        .address-text {
+            color: var(--dark-gray);
+        }
+
+        .address-text p {
+            margin-bottom: 5px;
+        }
+
+        /* Payment Section */
+        .payment-section {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .payment-methods {
+            margin-bottom: 20px;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .payment-option:hover {
+            border-color: var(--primary);
+        }
+
+        .payment-option input {
+            margin-right: 15px;
+            accent-color: var(--primary);
+        }
+
+        .payment-option label {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .payment-icon {
+            margin-right: 15px;
+            font-size: 24px;
+            color: var(--dark-gray);
+        }
+
+        .payment-text {
+            flex: 1;
+        }
+
+        .payment-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .payment-description {
+            font-size: 13px;
+            color: var(--dark-gray);
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            position: sticky;
+            top: 100px;
+        }
+
+        .order-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .order-item-image {
+            width: 70px;
+            height: 90px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .order-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .order-item-details {
+            flex: 1;
+        }
+
+        .order-item-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .order-item-brand {
+            font-size: 13px;
+            color: var(--dark-gray);
+            margin-bottom: 5px;
+        }
+
+        .order-item-price {
+            font-weight: 600;
+        }
+
+        .price-original {
+            text-decoration: line-through;
+            color: var(--dark-gray);
+            font-size: 13px;
+            margin-left: 5px;
+        }
+
+        .order-summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .order-summary-total {
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            margin-top: 15px;
+            font-weight: 700;
+        }
+
+        .order-summary-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .discount-bubble {
+            font-size: 12px;
+            background-color: #f0fff0;
+            color: #03a685;
+            padding: 3px 8px;
+            border-radius: 10px;
+            margin-top: 5px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background-color: #e6395a;
+        }
+
+        .secure-checkout {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+            color: var(--dark-gray);
+            font-size: 13px;
+        }
+
+        .secure-checkout i {
+            margin-right: 5px;
+            color: #03a685;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 767px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .address-details {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Notification Bar -->
+    <div class="notification-bar">
+        Free shipping on orders above ₹999 | Use code STYLO20 for 20% off
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobile-menu-button">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Logo -->
+            <a href="#" class="logo">STYLO</a>
+
+            <!-- Desktop Navigation -->
+            <div class="nav-links">
+                <a href="#">Men</a>
+                <a href="#">Women</a>
+                <a href="#">Kids</a>
+                <a href="#">Home & Living</a>
+                <a href="#">Beauty</a>
+            </div>
+
+            <!-- Search and Icons -->
+            <div class="nav-icons">
+                <a href="#"><i class="far fa-user"></i></a>
+                <a href="#"><i class="far fa-heart"></i></a>
+                <a href="#" class="cart-count" data-count="3">
+                    <i class="fas fa-shopping-bag"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Checkout Content -->
+    <div class="container checkout-container">
+        <div class="checkout-main">
+            <!-- Address Section -->
+            <div class="address-section">
+                <div class="address-header">
+                    <h3 class="address-title">Delivery Address</h3>
+                    <button class="change-btn">CHANGE</button>
+                </div>
+                <div class="address-details">
+                    <div class="address-default">Default</div>
+                    <div class="address-text">
+                        <p><strong>John Doe</strong> | +91 9876543210</p>
+                        <p>123, Main Street, Sector 12</p>
+                        <p>Near City Park, Opposite Bank</p>
+                        <p>Mumbai, Maharashtra - 400001</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Section -->
+            <div class="payment-section">
+                <h3 class="section-title">Payment Methods</h3>
+                <div class="payment-methods">
+                    <div class="payment-option">
+                        <input type="radio" id="credit-card" name="payment" checked>
+                        <label for="credit-card">
+                            <div class="payment-icon">
+                                <i class="far fa-credit-card"></i>
+                            </div>
+                            <div class="payment-text">
+                                <div class="payment-title">Credit / Debit Card</div>
+                                <div class="payment-description">Pay with Visa, Mastercard, Rupay or other debit/credit
+                                    cards</div>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </label>
+                    </div>
+
+                    <div class="payment-option">
+                        <input type="radio" id="upi" name="payment">
+                        <label for="upi">
+                            <div class="payment-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="payment-text">
+                                <div class="payment-title">UPI</div>
+                                <div class="payment-description">Pay using any UPI app like Google Pay, PhonePe, Paytm,
+                                    etc.</div>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </label>
+                    </div>
+
+                    <div class="payment-option">
+                        <input type="radio" id="netbanking" name="payment">
+                        <label for="netbanking">
+                            <div class="payment-icon">
+                                <i class="fas fa-university"></i>
+                            </div>
+                            <div class="payment-text">
+                                <div class="payment-title">Net Banking</div>
+                                <div class="payment-description">Pay directly from your bank account</div>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </label>
+                    </div>
+
+                    <div class="payment-option">
+                        <input type="radio" id="cod" name="payment">
+                        <label for="cod">
+                            <div class="payment-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="payment-text">
+                                <div class="payment-title">Cash On Delivery</div>
+                                <div class="payment-description">Pay when you receive the order</div>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Card Payment Form (shown when credit card is selected) -->
+                <div id="card-form">
+                    <div class="form-group">
+                        <label for="card-number">Card Number</label>
+                        <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 1;">
+                            <label for="card-expiry">Expiry Date</label>
+                            <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5">
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label for="card-cvv">CVV</label>
+                            <input type="text" id="card-cvv" placeholder="123" maxlength="3">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="card-name">Name on Card</label>
+                        <input type="text" id="card-name" placeholder="John Doe">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Summary Sidebar -->
+        <div class="checkout-sidebar">
+            <div class="order-summary">
+                <h3 class="section-title">Order Summary</h3>
+
+                <!-- Order Item 1 -->
+                <div class="order-item">
+                    <div class="order-item-image">
+                        <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=1887&auto=format&fit=crop"
+                            alt="Men's Casual Shirt">
+                    </div>
+                    <div class="order-item-details">
+                        <div class="order-item-name">Men's Slim Fit Casual Shirt</div>
+                        <div class="order-item-brand">ELLESSE</div>
+                        <div class="order-item-price">₹799 <span class="price-original">₹1599</span></div>
+                    </div>
+                </div>
+
+                <!-- Order Item 2 -->
+                <div class="order-item">
+                    <div class="order-item-image">
+                        <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=1887&auto=format&fit=crop"
+                            alt="Casual Sneakers">
+                    </div>
+                    <div class="order-item-details">
+                        <div class="order-item-name">Men's Casual Sneakers</div>
+                        <div class="order-item-brand">NIKE</div>
+                        <div class="order-item-price">₹2999 <span class="price-original">₹3749</span></div>
+                    </div>
+                </div>
+
+                <!-- Price Breakdown -->
+                <div class="order-summary-row">
+                    <span>Total MRP</span>
+                    <span>₹7598</span>
+                </div>
+
+                <div class="order-summary-row">
+                    <span>Discount on MRP</span>
+                    <span style="color: #03a685;">-₹2599</span>
+                </div>
+
+                <div class="order-summary-row">
+                    <span>Delivery Charges</span>
+                    <span>
+                        <span style="text-decoration: line-through;">₹129</span>
+                        <span style="color: #03a685; margin-left: 5px;">FREE</span>
+                        
+
+                                        </span>
+            </div>
+            
+            <div class="order-summary-row">
+                <span>Taxes & Fees</span>
+                <span>₹99</span>
+            </div>
+            
+            <div class="order-summary-row order-summary-total">
+                <span>Total Amount</span>
+                <span class="order-summary-value">₹4999</span>
+            </div>
+            
+            <div class="discount-bubble">
+                You saved ₹2728 on this order
+            </div>
+            
+            <button class="checkout-btn" id="place-order-btn">PLACE ORDER</button>
+            
+            <div class="secure-checkout">
+                <i class="fas fa-lock"></i> Secure checkout
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const closeMobileMenuButton = document.getElementById('close-mobile-menu');
+
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.add('active');
+    });
+
+    closeMobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+    });
+
+    // Payment method selection
+    const paymentOptions = document.querySelectorAll('.payment-option input');
+    const cardForm = document.getElementById('card-form');
+    
+    // Initially show card form if credit card is selected
+    if (document.getElementById('credit-card').checked) {
+        cardForm.style.display = 'block';
+    } else {
+        cardForm.style.display = 'none';
+    }
+    
+    paymentOptions.forEach(option => {
+        option.addEventListener('change', function() {
+            if (this.id === 'credit-card') {
+                cardForm.style.display = 'block';
+            } else {
+                cardForm.style.display = 'none';
+            }
+        });
+    });
+    
+    // Card number formatting
+    const cardNumberInput = document.getElementById('card-number');
+    cardNumberInput.addEventListener('input', function() {
+        let value = this.value.replace(/\s+/g, '');
+        if (value.length > 0) {
+            value = value.match(new RegExp('.{1,4}', 'g')).join(' ');
+        }
+        this.value = value;
+    });
+    
+    // Expiry date formatting
+    const expiryInput = document.getElementById('card-expiry');
+    expiryInput.addEventListener('input', function() {
+        let value = this.value.replace(/\D+/g, '');
+        if (value.length > 2) {
+            value = value.substring(0, 2) + '/' + value.substring(2, 4);
+        }
+        this.value = value;
+    });
+    
+    // CVV input restriction
+    const cvvInput = document.getElementById('card-cvv');
+    cvvInput.addEventListener('input', function() {
+        this.value = this.value.replace(/\D+/g, '');
+    });
+    
+    // Place order button functionality
+    document.getElementById('place-order-btn').addEventListener('click', function() {
+        // Validate form
+        const selectedPayment = document.querySelector('input[name="payment"]:checked').id;
+        
+        if (selectedPayment === 'credit-card') {
+            if (!validateCardForm()) {
+                return;
+            }
+        }
+        
+        // In a real application, you would process the payment here
+        alert('Order placed successfully! Thank you for your purchase.');
+        
+        // Redirect to order confirmation page
+        // window.location.href = 'order-confirmation.html';
+    });
+    
+    function validateCardForm() {
+        const cardNumber = document.getElementById('card-number').value.replace(/\s+/g, '');
+        const expiry = document.getElementById('card-expiry').value;
+        const cvv = document.getElementById('card-cvv').value;
+        const name = document.getElementById('card-name').value;
+        
+        if (cardNumber.length !== 16) {
+            alert('Please enter a valid 16-digit card number');
+            return false;
+        }
+        
+        if (!expiry || !expiry.includes('/') || expiry.length !== 5) {
+            alert('Please enter a valid expiry date in MM/YY format');
+            return false;
+        }
+        
+        if (cvv.length !== 3) {
+            alert('Please enter a valid 3-digit CVV');
+            return false;
+        }
+        
+        if (!name) {
+            alert('Please enter the name on your card');
+            return false;
+        }
+        
+        return true;
+    }
+</script>

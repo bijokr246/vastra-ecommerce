@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Vastra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff3f6c;
+            --primary-dark: #e6395a;
+            --secondary: #282c3f;
+            --light-gray: #f5f5f6;
+            --dark-gray: #696b79;
+            --white: #ffffff;
+            --black: #000000;
+            --error: #e74c3c;
+            --success: #2ecc71;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #fafafa;
+            color: var(--secondary);
+        }
+
+        .register-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .register-left {
+            flex: 1;
+            background-color: var(--primary);
+            background: linear-gradient(135deg, #ff3f6c 0%, #ff6b8b 100%);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: var(--white);
+        }
+
+        @media (min-width: 768px) {
+            .register-left {
+                display: flex;
+            }
+        }
+
+        .register-left-content {
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .register-left h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .register-left p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .register-left img {
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .register-right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .register-form-container {
+            max-width: 450px;
+            width: 100%;
+            background-color: var(--white);
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+
+        .register-form h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+
+        .input-field {
+            position: relative;
+        }
+
+        .input-field input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+
+        .input-field input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--dark-gray);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--dark-gray);
+            cursor: pointer;
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .success-message {
+            color: var(--success);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            text-align: center;
+            display: none;
+        }
+
+        .register-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 1rem;
+        }
+
+        .register-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+
+        .login-link {
+            text-align: center;
+            color: var(--dark-gray);
+            margin-top: 1.5rem;
+        }
+
+        .login-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <!-- Left Side (Branding) -->
+        <div class="register-left">
+            <div class="register-left-content">
+                <h1>Join Vastra!</h1>
+                <p>Create an account to enjoy personalized recommendations, faster checkout, and exclusive offers</p>
+                <img src="https://img.freepik.com/free-vector/online-shopping-concept-illustration_114360-1084.jpg" alt="Vastra Fashion Illustration">
+            </div>
+        </div>
+
+        <!-- Right Side (Register Form) -->
+        <div class="register-right">
+            <div class="register-form-container">
+                <div class="logo">
+                    <h2>VASTRA</h2>
+                </div>
+
+                <form class="register-form" id="registerForm">
+                    <h3>Create your account</h3>
+
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <div class="input-field">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" id="fullName" placeholder="Enter your full name">
+                        </div>
+                        <span class="error-message" id="nameError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-field">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="email" placeholder="Enter your email">
+                        </div>
+                        <span class="error-message" id="emailError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <div class="input-field">
+                            <i class="fas fa-phone input-icon"></i>
+                            <input type="tel" id="phone" placeholder="Enter your phone number">
+                        </div>
+                        <span class="error-message" id="phoneError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-field">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="password" placeholder="Create a password">
+                            <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                        </div>
+                        <span class="error-message" id="passwordError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <div class="input-field">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="confirmPassword" placeholder="Confirm your password">
+                        </div>
+                        <span class="error-message" id="confirmPasswordError"></span>
+                    </div>
+
+                    <button type="submit" class="register-btn">Create Account</button>
+
+                    <div class="login-link">
+                        Already have an account? <a href="#">Log in</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get all elements needed for validation
+        const fullNameInput = document.getElementById('fullName');
+        const emailInput = document.getElementById('email');
+        const phoneInput = document.getElementById('phone');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+
+        const nameError = document.getElementById('name-error');
+        const emailError = document.getElementById('email-error');
+        const phoneError = document.getElementById('phone-error');
+        const passwordError = document.getElementById('password-error');
+        const confirmPasswordError = document.getElementById('confirm-password-error');
+        
+        // --- Individual Validation Functions ---
+        function validateFullName() {
+            if (fullNameInput.value.trim() === '') {
+                nameError.textContent = 'Full name is required.';
+                return false;
+            }
+            nameError.textContent = '';
+            return true;
+        }
+
+        function validateEmail() {
+            const email = emailInput.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email === '') {
+                emailError.textContent = 'Email address is required.';
+                return false;
+            } else if (!emailRegex.test(email)) {
+                emailError.textContent = 'Please enter a valid email address.';
+                return false;
+            }
+            emailError.textContent = '';
+            return true;
+        }
+
+        function validatePhone() {
+            const phone = phoneInput.value.trim();
+            const phoneRegex = /^[0-9]{10,15}$/;
+            if (phone === '') {
+                phoneError.textContent = 'Phone number is required.';
+                return false;
+            } else if (!phoneRegex.test(phone)) {
+                phoneError.textContent = 'Please enter a valid 10 to 15 digit phone number.';
+                return false;
+            }
+            phoneError.textContent = '';
+            return true;
+        }
+
+        function validatePassword() {
+            if (passwordInput.value.length < 8) {
+                passwordError.textContent = 'Password must be at least 8 characters long.';
+                return false;
+            }
+            passwordError.textContent = '';
+            validateConfirmPassword(); // Re-check confirmation if main password changes
+            return true;
+        }
+
+        function validateConfirmPassword() {
+            if (confirmPasswordInput.value !== passwordInput.value) {
+                confirmPasswordError.textContent = 'Passwords do not match.';
+                return false;
+            }
+            confirmPasswordError.textContent = '';
+            return true;
+        }
+        
+        // --- Main Form Validation Function (called on submit) ---
+        function validateForm() {
+            // Run all validations and store their results
+            const isNameValid = validateFullName();
+            const isEmailValid = validateEmail();
+            const isPhoneValid = validatePhone();
+            const isPasswordValid = validatePassword();
+            const isConfirmPasswordValid = validateConfirmPassword();
+            const areTermsValid = validateTerms();
+
+            // Return true only if all validations pass
+            return isNameValid && isEmailValid && isPhoneValid && isPasswordValid && isConfirmPasswordValid;
+        }
+
+        // --- Password Visibility Toggle ---
+        const togglePassword = document.getElementById('togglePassword');
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
+</body>
+</html>

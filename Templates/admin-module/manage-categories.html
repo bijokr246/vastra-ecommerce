@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Categories | Vastra Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="admin-style.css">
+</head>
+
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-header"><a href="#">VASTRA</a></div>
+    <ul class="sidebar-nav">
+      <li><a href="dashboard.html"><i class="fas fa-tachometer-alt fa-fw"></i> <span>Dashboard</span></a></li>
+      <li><a href="manage-users.html"><i class="fas fa-users fa-fw"></i> <span>Manage Users</span></a></li>
+      <li><a href="seller-requests.html"><i class="fas fa-store fa-fw"></i> <span>Seller Requests</span></a></li>
+      <li><a href="product-approvals.html"><i class="fas fa-box-open fa-fw"></i> <span>Product Approvals</span></a></li>
+      <li><a href="manage-categories.html" class="active"><i class="fas fa-sitemap fa-fw"></i> <span>Manage
+            Categories</span></a></li>
+      <li><a href="orders.html"><i class="fas fa-receipt fa-fw"></i> <span>All Orders</span></a></li>
+
+      <li class="logout-item">
+        <a href="#"><i class="fas fa-sign-out-alt fa-fw"></i> <span>Logout</span></a>
+      </li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    <h1 class="page-header">Category Management</h1>
+    <section class="content-card category-layout">
+      <div>
+        <h2>Category List</h2>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <!-- Added Image column header -->
+              <th>Image</th>
+              <th>Category</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <!-- Added Image data cell -->
+              <td><img src="https://via.placeholder.com/50" alt="Men" class="table-image"></td>
+              <td>Men</td>
+              <td class="action-buttons">
+                <a href="#" class="btn btn-sm btn-secondary">Edit</a>
+                <a class="btn btn-sm btn-primary" href="#">Delete</a>
+              </td>
+            </tr>
+            <tr>
+              <!-- Added Image data cell -->
+              <td><img src="https://via.placeholder.com/50" alt="Women" class="table-image"></td>
+              <td>Women</td>
+              <td class="action-buttons">
+                <a href="#" class="btn btn-sm btn-secondary">Edit</a>
+                <a class="btn btn-sm btn-primary" href="#">Delete</a>
+              </td>
+            </tr>
+            <tr>
+              <!-- Added Image data cell -->
+              <td><img src="https://via.placeholder.com/50" alt="Kids" class="table-image"></td>
+              <td>Kids</td>
+              <td class="action-buttons">
+                <a href="#" class="btn btn-sm btn-secondary">Edit</a>
+                <a class="btn btn-sm btn-primary" href="#">Delete</a>
+              </td>
+            </tr>
+            <tr>
+              <!-- Added Image data cell -->
+              <td><img src="https://via.placeholder.com/50" alt="Home Textiles" class="table-image"></td>
+              <td>Home Textiles</td>
+              <td class="action-buttons">
+                <a href="#" class="btn btn-sm btn-secondary">Edit</a>
+                <a class="btn btn-sm btn-primary" href="#">Delete</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h2>Add New Category</h2>
+        <form>
+          <div class="form-group">
+            <label>Category Name</label>
+            <input type="text" placeholder="e.g., Footwear" />
+          </div>
+          <!-- Added file input for category image -->
+          <div class="form-group">
+            <label>Category Image</label>
+            <input type="file" accept="image/*" />
+          </div>
+          <button class="btn btn-primary" type="submit">Add Category</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="content-card category-layout">
+      <div>
+        <h2>Subcategory List</h2>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Subcategory</th>
+              <th>Parent Category</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>T-Shirts</td>
+              <td>Men</td>
+              <td class="action-buttons">
+                <a href="#" class="btn btn-sm btn-secondary">Edit</a>
+                <a class="btn btn-sm btn-primary" href="#">Delete</a>
+              </td>
+            </tr>
+            <tr>
+                <td>Jeans</td>
+                <td>Men</td>
+                <td class="action-buttons">
+                  <a href="#" class="btn btn-sm btn-secondary">Edit</a>
+                  <a class="btn btn-sm btn-primary" href="#">Delete</a>
+                </td>
+              </tr>
+            <tr>
+              <td>Sarees</td>
+              <td>Women</td>
+              <td class="action-buttons">
+                <a href="#" class="btn btn-sm btn-secondary">Edit</a>
+                <a class="btn btn-sm btn-primary" href="#">Delete</a>
+              </td>
+            </tr>
+            <tr>
+                <td>Dresses</td>
+                <td>Women</td>
+                <td class="action-buttons">
+                  <a href="#" class="btn btn-sm btn-secondary">Edit</a>
+                  <a class="btn btn-sm btn-primary" href="#">Delete</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Toys</td>
+                <td>Kids</td>
+                <td class="action-buttons">
+                  <a href="#" class="btn btn-sm btn-secondary">Edit</a>
+                  <a class="btn btn-sm btn-primary" href="#">Delete</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Bedsheets</td>
+                <td>Home Textiles</td>
+                <td class="action-buttons">
+                  <a href="#" class="btn btn-sm btn-secondary">Edit</a>
+                  <a class="btn btn-sm btn-primary" href="#">Delete</a>
+                </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h2>Add New Subcategory</h2>
+        <form>
+          <div class="form-group">
+            <label>Subcategory Name</label>
+            <input type="text" placeholder="e.g., T-Shirts" />
+          </div>
+          <div class="form-group">
+            <label>Parent Category</label>
+            <select>
+              <option disabled selected>Select a parent category</option>
+              <option value="men">Men</option>
+              <option value="women">Women</option>
+              <option value="kids">Kids</option>
+              <option value="home-textiles">Home Textiles</option>
+              <option value="footwear">Footwear</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" type="submit">Add Subcategory</button>
+        </form>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Approvals | Vastra Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="admin-style.css">
+</head>
+
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-header"><a href="#">VASTRA</a></div>
+    <ul class="sidebar-nav">
+      <li><a href="dashboard.html"><i class="fas fa-tachometer-alt fa-fw"></i> <span>Dashboard</span></a></li>
+      <li><a href="manage-users.html"><i class="fas fa-users fa-fw"></i> <span>Manage Users</span></a></li>
+      <li><a href="seller-requests.html"><i class="fas fa-store fa-fw"></i> <span>Seller Requests</span></a></li>
+      <li><a href="product-approvals.html" class="active"><i class="fas fa-box-open fa-fw"></i> <span>Product
+            Approvals</span></a></li>
+      <li><a href="manage-categories.html"><i class="fas fa-sitemap fa-fw"></i> <span>Manage Categories</span></a></li>
+      <li><a href="orders.html"><i class="fas fa-receipt fa-fw"></i> <span>All Orders</span></a></li>
+      
+      <li class="logout-item">
+        <a href="#"><i class="fas fa-sign-out-alt fa-fw"></i> <span>Logout</span></a>
+      </li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    <h1 class="page-header">Product Approvals</h1>
+    <section class="content-card">
+      <h2>Product Approval Queue</h2>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Category</th>
+            <th>Seller</th>
+            <th>Price</th>
+            <th>Submitted</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Silk Saree</td>
+            <td>Women</td>
+            <td>TrendzHub</td>
+            <td>₹1,299</td>
+            <td>2025-07-14</td>
+            <td><span class="status pending">Pending</span></td>
+            <td class="action-buttons">
+              <a class="btn btn-sm btn-primary" href="#">Approve</a>
+              <a class="btn btn-sm btn-secondary" href="#">Reject</a>
+            </td>
+          </tr>
+          <tr>
+            <td>Men's Kurta</td>
+            <td>Men</td>
+            <td>FabStore</td>
+            <td>₹899</td>
+            <td>2025-07-13</td>
+            <td><span class="status pending">Pending</span></td>
+            <td class="action-buttons">
+              <a class="btn btn-sm btn-primary" href="#">Approve</a>
+              <a class="btn btn-sm btn-secondary" href="#">Reject</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+
+</html>

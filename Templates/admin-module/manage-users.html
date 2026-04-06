@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Users | Vastra Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="admin-style.css">
+</head>
+
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-header"><a href="#">VASTRA</a></div>
+    <ul class="sidebar-nav">
+      <li><a href="dashboard.html"><i class="fas fa-tachometer-alt fa-fw"></i> <span>Dashboard</span></a></li>
+      <li><a href="manage-users.html" class="active"><i class="fas fa-users fa-fw"></i> <span>Manage Users</span></a>
+      </li>
+      <li><a href="seller-requests.html"><i class="fas fa-store fa-fw"></i> <span>Seller Requests</span></a></li>
+      <li><a href="product-approvals.html"><i class="fas fa-box-open fa-fw"></i> <span>Product Approvals</span></a></li>
+      <li><a href="manage-categories.html"><i class="fas fa-sitemap fa-fw"></i> <span>Manage Categories</span></a></li>
+      <li><a href="orders.html"><i class="fas fa-receipt fa-fw"></i> <span>All Orders</span></a></li>
+      
+      <li class="logout-item">
+        <a href="#"><i class="fas fa-sign-out-alt fa-fw"></i> <span>Logout</span></a>
+      </li>
+
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    <h1 class="page-title">User Management</h1>
+    <section class="content-card">
+      <div class="page-header">
+        <h2>All Registered Users</h2>
+        <input type="text" placeholder="Search users by name or email..." />
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#102</td>
+            <td>Aarav Sharma</td>
+            <td>aarav@example.com</td>
+            <td>Buyer</td>
+            <td><span class="status active">Active</span></td>
+            <td class="action-buttons">
+              <a class="btn btn-sm btn-primary" href="#">Deactivate</a>
+            </td>
+          </tr>
+          <tr>
+            <td>#103</td>
+            <td>Priya Patel</td>
+            <td>priya@example.com</td>
+            <td>Seller</td>
+            <td><span class="status active">Active</span></td>
+            <td class="action-buttons">
+              <a class="btn btn-sm btn-primary" href="#">Deactivate</a>
+            </td>
+          </tr>
+          <tr>
+            <td>#104</td>
+            <td>Rohan Verma</td>
+            <td>rohan.v@example.com</td>
+            <td>Buyer</td>
+            <td><span class="status inactive">Inactive</span></td>
+            <td class="action-buttons">
+              <a class="btn btn-sm btn-primary" href="#">Activate</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+
+</html>

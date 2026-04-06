@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Products | Vastra</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="sidebar">
+    <h2>VASTRA</h2>
+    <ul>
+      <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+      <li><a href="my-products.html" class="active"><i class="fas fa-box"></i> My Products</a></li>
+      <li><a href="add-product.html"><i class="fas fa-plus-circle"></i> Add Product</a></li>
+      <li><a href="orders.html"><i class="fas fa-clipboard-list"></i> Orders</a></li>
+      <li><a href="my-shop.html"><i class="fas fa-store"></i> My Shop</a></li>
+      <li><a href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main">
+    <div class="header">
+      <h1>My Products</h1>
+      <a href="add-product.html" class="btn btn-primary"><i class="fas fa-plus"></i> Add New Product</a>
+    </div>
+    <div class="content">
+      <table>
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Product</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><img src="https://via.placeholder.com/40" alt="Product Image" class="product-img"></td>
+            <td>Cotton Kurti</td>
+            <td>Women</td>
+            <td>₹1,200</td>
+            <td>50</td>
+            <td><span class="status approved">Approved</span></td>
+            <td class="actions"><a href="#"><i class="fas fa-edit"></i></a><a href="#"><i class="fas fa-trash-alt"></i></a></td>
+          </tr>
+          <tr>
+            <td><img src="https://via.placeholder.com/40" alt="Product Image" class="product-img"></td>
+            <td>Linen Shirt</td>
+            <td>Men</td>
+            <td>₹990</td>
+            <td>120</td>
+            <td><span class="status pending">Pending</span></td>
+            <td class="actions"><a href="#"><i class="fas fa-edit"></i></a><a href="#"><i class="fas fa-trash-alt"></i></a></td>
+          </tr>
+          <tr>
+            <td><img src="https://via.placeholder.com/40" alt="Product Image" class="product-img"></td>
+            <td>Kids Denim Shorts</td>
+            <td>Kids</td>
+            <td>₹450</td>
+            <td>85</td>
+            <td><span class="status approved">Approved</span></td>
+            <td class="actions"><a href="#"><i class="fas fa-edit"></i></a><a href="#"><i class="fas fa-trash-alt"></i></a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
